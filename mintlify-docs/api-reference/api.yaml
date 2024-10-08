@@ -1641,7 +1641,6 @@ servers:
   - url: https://api.testnet.crestal.xyz/v1
   - url: https://api.service.crestal.dev/v1
   - url: https://api.crestal.dev/v1
-  - url: /v1
 components:
   securitySchemes:
     bearerAuth:
