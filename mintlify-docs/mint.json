@@ -17,6 +17,10 @@
   },
   "navigation": [
     {
+      "group":"",
+      "pages": ["introduction"]
+    },
+    {
       "group": "🚀 Getting Started",
       "pages": ["guides/testnet", "guides/quests"]
     },
