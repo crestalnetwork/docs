@@ -7,12 +7,12 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#3B82F6",
-    "light": "#E0F2FE",
-    "dark": "#2563EB",
+    "primary": "#7AB800",
+    "light": "#D9F2B1",
+    "dark": "#5A8600",
     "anchors": {
-      "from": "#3B82F6",
-      "to": "#2563EB"
+      "from": "#7AB800",
+      "to": "#5A8600"
     }
   },
   "navigation": [
@@ -91,6 +91,7 @@
       ]
     }
   ],
+  "theme": "venus",
   "footerSocials": {
     "twitter": "https://x.com/crestalnetwork",
     "youtube": "https://www.youtube.com/@Crestalnetwork",
