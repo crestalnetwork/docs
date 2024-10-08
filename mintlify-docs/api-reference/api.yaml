@@ -1639,11 +1639,8 @@ paths:
           content: { }
 servers:
   - url: https://api.testnet.crestal.xyz/v1
-  - url: http://api.testnet.crestal.xyz/v1
   - url: https://api.service.crestal.dev/v1
   - url: https://api.crestal.dev/v1
-  - url: http://api.crestal.dev/v1
-  - url: http://127.0.0.1:80/v1
   - url: /v1
 components:
   securitySchemes:
