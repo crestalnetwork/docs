@@ -114,7 +114,7 @@ paths:
       parameters:
         - name: user_address
           in: query
-          description: User's blockchain address in hexadecimal format.....
+          description: User's blockchain address in hexadecimal format.
           schema:
             type: string
             minLength: 3
@@ -1638,7 +1638,7 @@ paths:
           description: Internal Server Error
           content: { }
 servers:
-  - url: https://api.service.testnet.crestal
+  - url: https://api.service.testnet.crestal.xyz/v1
 components:
   securitySchemes:
     bearerAuth:
