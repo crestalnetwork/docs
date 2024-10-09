@@ -20,7 +20,7 @@ paths:
   /nonce:
     get:
       summary: Retrieve nonce for authentication
-      description: Provides a nonce for authentication purposes
+      description: Provides a nonce for authentication purposes.
       operationId: GetNonce
       parameters:
         - name: user_address
