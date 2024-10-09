@@ -15,7 +15,7 @@ paths:
           description: Successful health check.
           content: {}
         "500":
-          description: Server encountered an internal error.
+          description: Server encountered an internal error
           content: {}
   /nonce:
     get:
