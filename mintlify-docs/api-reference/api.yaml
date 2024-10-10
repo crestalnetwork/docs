@@ -1627,7 +1627,7 @@ paths:
             example: da
       responses:
         "200":
-          description: A list of metadata metrics.
+          description: A list of metadata metrics..
           content:
             application/json:
               schema:
