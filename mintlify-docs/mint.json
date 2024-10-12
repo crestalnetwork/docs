@@ -17,7 +17,7 @@
   },
   "navigation": [
     {
-      "group":"",
+      "group": "",
       "pages": ["introduction"]
     },
     {
@@ -64,26 +64,27 @@
             "api-reference/store-da-dynamic-data",
             "api-reference/list-data-availability-da-dynamic-data",
             "api-reference/create-da-dynamic-data",
-            "api-reference/create-a-new-da-entry-in-the-database",
             "api-reference/retrieve-da-static-information-temporary-endpoint",
             "api-reference/retrieve-da-static-information",
             "api-reference/retrieve-da-graph-information"
           ]
         },
         {
-          "group": "Proposals & Quests APIs",
+          "group": "Proposals APIs",
           "pages": [
             "api-reference/retrieve-recommended-proposals-from-solvers",
             "api-reference/retrieve-a-proposal-by-id",
             "api-reference/retrieve-recommended-proposals-from-solvers-1",
             "api-reference/accept-a-list-of-proposals-from-solvers",
-            "api-reference/create-a-new-proposal",
-            "api-reference/retrieve-all-quests",
-            "api-reference/create-a-new-quest",
-            "api-reference/retrieve-all-user-quests",
-            "api-reference/import-user-completed-quests",
-            "api-reference/get-weekly-quests-for-all-user",
-            "api-reference/update-quest"
+            "api-reference/create-a-new-proposal"
+          ]
+        },
+        {
+          "group": "Quests APIs",
+          "pages": [
+            "api-reference/retrieve-weekly-quests-for-all-users",
+            "api-reference/retrieve-user-referral-information",
+            "api-reference/claim-a-referral-code"
           ]
         },
         {

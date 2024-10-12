@@ -199,64 +199,6 @@ paths:
         "500":
           description: Server encountered an internal error.
           content: {}
-
-  /api_key:
-    get:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Retrieve an API key
-      description: Provides an API key associated with the specified user address.
-      operationId: APIKey
-      parameters:
-        - name: user_address
-          in: query
-          description: User's blockchain address in hexadecimal format.
-          schema:
-            type: string
-            minLength: 3
-          required: true
-      responses:
-        "200":
-          description: Successfully retrieved the API key.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIKey'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
-    post:
-      summary: Create a new API key
-      description: Generates a new API key for the specified user.
-      operationId: CreateAPIKey
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginRequest'
-        required: true
-      responses:
-        "200":
-          description: Successfully created the API key.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIKey'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
   /projects:
     get:
       security:
@@ -748,36 +690,6 @@ paths:
           description: Server encountered an internal error.
           content: {}
       x-codegen-request-body-name: data
-  /onboarding/da:
-    post:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Create a new DA entry in the database
-      description: Onboards a new Data Availability (DA) solution, including static information such as consensus algorithm.
-      operationId: CreateDA
-      requestBody:
-        description: Request body containing DA static data.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DA'
-        required: true
-      responses:
-        "200":
-          description: Successfully created the full DA information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DA'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
   /das:
     get:
       summary: Retrieve DA static information (temporary endpoint)
@@ -1157,36 +1069,6 @@ paths:
         "500":
           description: Server encountered an internal error.
           content: {}
-  /solvers:
-    post:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Create a solver
-      description: Adds a new solver with provided details.
-      operationId: CreateSolver
-      requestBody:
-        description: Request body containing solver information, such as address.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Solver'
-        required: true
-      responses:
-        "200":
-          description: Successfully created solver information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Solver'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
   /workers/{worker_uuid}:
     get:
       security:
@@ -1259,58 +1141,6 @@ paths:
         "500":
           description: Server encountered an internal error.
           content: {}
-  /whitelist:
-    get:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Retrieve all whitelisted wallet addresses
-      description: Provides a list of all wallet addresses that have been whitelisted.
-      operationId: getWhiteLists
-      responses:
-        "200":
-          description: Successfully retrieved whitelisted wallet addresses.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WhiteLists'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
-    post:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Add an address to the whitelist
-      description: Adds a wallet address to the whitelist.
-      operationId: setWhiteList
-      requestBody:
-        description: Request body containing wallet address to be added.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/whiteList'
-        required: true
-      responses:
-        "200":
-          description: Successfully added the wallet address to the whitelist.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/whiteList'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
   /chat:
     get:
       security:
@@ -1373,116 +1203,6 @@ paths:
         "500":
           description: Server encountered an internal error.
           content: {}
-  /quests:
-    get:
-      security:
-        - bearerAuth: [ ]
-        - ApiKeyAuth: [ ]
-      summary: Retrieve all quests
-      description: Provides a list of all quests available to the user.
-      operationId: getQuests
-      responses:
-        "200":
-          description: Successfully retrieved quest information.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Quests'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
-    post:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Create a new quest
-      description: Adds a new quest to the system.
-      operationId: createQuests
-      requestBody:
-        description: Request body containing quest data.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Quests'
-        required: true
-      responses:
-        "200":
-          description: Successfully created quest information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Quests'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
-  /user/quests:
-    get:
-      security:
-        - bearerAuth: [ ]
-      summary: Retrieve all user quests
-      description: Provides a list of all quests associated with a user.
-      operationId: getUserQuests
-      responses:
-        "200":
-          description: Successfully retrieved user quest information.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserQuest'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
-    post:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Import user completed quests
-      description: Imports completed quests for a specific user.
-      operationId: importUserQuests
-      requestBody:
-        description: Request body containing completed quests.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserPostQuests'
-        required: true
-      responses:
-        "200":
-          description: Successfully imported user quest information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommonResponse'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Server encountered an internal error.
-          content: {}
-
   /quests/weekly:
     get:
       security:
@@ -1497,43 +1217,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WeeklyQuests'
-        "400":
-          description: Invalid request parameters.
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Internal server error.
-          content: {}
-  /quests/{quest_id}:
-    patch:
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Update quest details
-      description: Updates the information of a specific quest.
-      operationId: updateQuests
-      parameters:
-        - name: quest_id
-          in: path
-          description: Unique identifier of the quest to be updated.
-          required: true
-          schema:
-            type: number
-      requestBody:
-        description: Updated quest data.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Quests'
-        required: true
-      responses:
-        "200":
-          description: Successfully updated the quest information.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Quests'
         "400":
           description: Invalid request parameters.
           content:
@@ -1654,7 +1337,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/HistoryData'
         - $ref: '#/components/schemas/DASpecificInfo'
-        - $ref: '#/components/schemas/DA'
     DASpecificInfo:
       type: object
       properties:
@@ -1662,67 +1344,75 @@ components:
           $ref: '#/components/schemas/State'
         geo_coverage:
           type: number
+          description: Geographical coverage (numeric).
         grants_available:
           type: boolean
+          description: Indicates whether grants are available (true/false).
         number_of_projects:
           type: integer
+          description: The number of projects associated with this DA.
         node_info:
           type: object
-          description: sender node info
+          description: Information about the sender node.
     DA:
       type: object
       properties:
         da_name:
           type: string
-          description: DA name
+          description: The name of the DA (Data Availability).
           example: EigenDA
         network_type:
           type: string
-          description: network type
+          description: Type of the network.
           enum:
             - Mainnet
             - Testnet
         network:
           type: string
-          description: network name
+          description: Name of the network.
         gas_token:
           type: string
-          description: gas token symbol
+          description: The gas token symbol used in this network.
           example: ETH
         explorer:
           type: string
-          description: explorer url
+          description: URL to the network explorer.
         launch_date:
           type: string
-          description: "launch date in format xxxx-xx-xx"
+          description: Launch date in the format 'yyyy-mm-dd'.
           example: 2024-01-09
         consensus_algorithm:
           type: string
-          description: consensus algorithm
+          description: Consensus algorithm used by the DA.
           example: proof of work
         data_availability_sampling:
           type: boolean
+          description: Indicates whether data availability sampling is enabled.
     State:
       type: object
       properties:
         data_availability:
           type: integer
+          description: Numeric value representing data availability.
         exit_windows:
           type: integer
+          description: The number of exit windows available.
         propose_failure:
           type: integer
+          description: The number of proposed failures.
         state_validation:
           type: integer
+          description: Validation state value.
     DAHistoryData:
       type: object
       properties:
         da_name:
           type: string
-          description: "DA name ex: NearDA"
+          description: Name of the DA (e.g., NearDA).
           example: NearDA
         history_data:
           type: array
-          description: DA graph history data
+          description: Array of historical graph data related to DA.
           items:
             $ref: '#/components/schemas/HistoryData'
     GraphDAInfoResponse:
@@ -1730,12 +1420,12 @@ components:
       properties:
         data:
           type: array
-          description: an array of DA graph history data object
+          description: An array containing historical DA graph data objects.
           items:
             $ref: '#/components/schemas/DAHistoryData'
         network_type:
           type: string
-          description: "network type ex: Mainnet, Testnet"
+          description: Network type (e.g., Mainnet, Testnet).
           example: Mainnet
     DAInfo:
       allOf:
@@ -1746,12 +1436,12 @@ components:
       properties:
         da_infos:
           type: array
-          description: an array of DAInfo object
+          description: An array containing DA information objects.
           items:
             $ref: '#/components/schemas/DAInfo'
         network_type:
           type: string
-          description: "network type ex: Mainnet, Testnet"
+          description: Type of the network (e.g., Mainnet, Testnet).
           example: Mainnet
     PostResponse:
       type: object
@@ -1760,146 +1450,155 @@ components:
           $ref: '#/components/schemas/DAInfoResource'
         message:
           type: string
+          description: Message returned from the API.
         status:
           type: string
+          description: Status of the API call (e.g., success, failure).
     HistoryData:
       type: object
       properties:
         sender_name:
           type: string
-          description: sender identity
+          description: Identity of the sender.
         sender_address:
           type: string
-          description: sender blockchain address in hex
+          description: Blockchain address of the sender (in hex format).
         avg_cost:
           type: number
-          description: "average cost unit: USD"
+          description: Average transaction cost (in USD).
           example: 3.2
         block_time:
           type: number
-          description: block time in second
+          description: Block time in seconds.
           example: 11.99
         created_at:
           type: string
-          description: "no need to set this value, auto created by database"
+          description: Timestamp when the record was created, automatically set by the database.
           example: 2024-04-26T12:56:41.240582Z
         finality_time:
           type: number
-          description: block confirmation time in second
+          description: Block finality confirmation time (in seconds).
           example: 24.01
         latency:
           type: number
-          description: latency in second
+          description: Network latency (in seconds).
           example: 0.3
         max_throughput:
           type: number
-          description: "max throughput unit: mb/s"
+          description: Maximum throughput of the network (in Mbps).
           example: 10.5
         uptime:
           type: number
-          description: The percentage of time the service is available
+          description: Percentage of time the network was available.
           example: 10.0
         total_transactions:
           type: integer
-          description: total transactions so far
+          description: Total number of transactions processed.
         total_blocks:
           type: integer
-          description: total blocks so far
+          description: Total number of blocks created.
         total_fee:
           type: number
-          description: total gas so far
+          description: Total transaction fee accumulated (in gas).
         total_fee_usd:
           type: number
-          description: total gas in usd
+          description: Total transaction fee accumulated (in USD).
         total_staked:
           type: number
-          description: total staked so far
+          description: Total amount staked (in token).
         total_staked_usd:
           type: number
-          description: total staked in usd
+          description: Total amount staked (in USD).
         number_of_nodes:
           type: integer
-          description: the number of nodes so far
+          description: Number of nodes participating in the network.
         throughput:
           type: number
-          description: throughput in mb/s
+          description: Current throughput (in Mbps).
         node_reliability:
           type: number
-          description: node reliability
+          description: Reliability score of nodes.
         cost_per_transaction:
           type: number
-          description: the gas usd cost per transaction
+          description: Cost per transaction (in USD).
         gas_per_transaction:
           type: number
-          description: the gas per transaction in gas token
+          description: Gas units used per transaction.
         cost_per_block:
           type: number
-          description: the gas usd cost per block
+          description: Cost per block (in USD).
         gas_per_block:
           type: number
-          description: the gas per block in gas token
+          description: Gas units used per block.
         cost_per_mb:
           type: number
-          description: the gas usd cost per mb
+          description: Cost per megabyte of data transacted (in USD).
         gas_per_mb:
           type: number
-          description: the gas per mb in gas token
+          description: Gas units per megabyte of data transacted.
         total_value_locked:
           type: number
+          description: Total value locked (in token).
         send_blob_latency:
           type: number
-          description: latency of sending one blob to network
+          description: Latency of sending a blob to the network (in seconds).
         total_data_transacted:
           type: number
-          description: Get from explorer directly
+          description: Total amount of data transacted (from explorer data).
     SolverProposals:
       type: object
-      description: Will be deprecated in the future once solver development is complete.
+      description: Will be deprecated once the solver development is complete.
       properties:
         solver_proposals:
           type: array
+          description: Array of solver proposal objects.
           items:
             $ref: '#/components/schemas/SolverProposal'
     SolverProposal:
       type: object
-      description: Will be deprecated in the future once solver development is complete.
+      description: Represents a proposal from a solver, deprecated in the future.
       properties:
         proposals:
           type: array
+          description: List of proposal objects.
           items:
             $ref: '#/components/schemas/Proposal'
         solver_uuid:
           type: string
-          description: Unique identifier (UUID) of the solver.
+          description: UUID of the solver.
         solver_reputation:
           type: number
           description: Reputation score of the solver.
     SolversProposalsResponse:
       type: object
+      description: Response containing a list of solver proposals.
       properties:
         proposals:
           type: array
+          description: Array of solver proposal objects.
           items:
             $ref: '#/components/schemas/SolversProposal'
         request_id:
           type: string
-          description: Unique request ID.
+          description: ID of the request for proposals.
     SolversProposals:
       type: object
+      description: Details of proposals from solvers.
       properties:
         proposals:
           type: array
+          description: List of solver proposal objects.
           items:
             $ref: '#/components/schemas/SolversProposal'
         solver_address:
           type: string
-          description: Solver's blockchain address in hexadecimal format.
+          description: Address of the solver (in hex format).
         solver_reputation:
           type: number
           description: Reputation score of the solver.
         request_id:
           type: string
-          description: Unique request ID.
+          description: ID of the request associated with the proposals.
     SolversProposal:
       type: object
       properties:
@@ -1908,7 +1607,7 @@ components:
           description: Request ID from the solver smart contract.
         solver_address:
           type: string
-          description: Solver's blockchain address in hexadecimal format.
+          description: Address of the solver (in hex format).
         solver_reputation:
           type: number
           description: Reputation score of the solver.
@@ -1961,30 +1660,30 @@ components:
       properties:
         init_cost:
           type: number
-          description: Initial cost to deploy this proposal.
+          description: Initial cost to deploy this proposal (in USD).
         maintenance_cost:
           type: number
-          description: Maintenance cost for this proposal.
+          description: Ongoing maintenance cost (in USD).
         pay_period:
           type: number
-          description: Payment period for the proposal.
+          description: Payment period (in days).
         accept_currency:
           type: string
-          description: Currency accepted for payment.
+          description: Accepted currency for payments.
         cost:
           type: number
-          description: Cost in USD.
+          description: Total cost (in USD).
           example: 100
         fit:
           type: number
           description: Fit score of the proposal.
         throughput:
           type: number
-          description: Throughput in megabytes per second.
+          description: Throughput of the network (in Mbps).
           example: 100
         sla:
           type: number
-          description: Uptime in seconds.
+          description: Uptime Service Level Agreement (in seconds).
           example: 100
         error_rate:
           type: number
@@ -1992,10 +1691,10 @@ components:
           example: 0.1
         rank:
           type: number
-          description: Rank of the proposal.
+          description: Rank of the DA proposal.
         extra_attribute:
           type: object
-          description: Additional attributes of the proposal, including setup details.
+          description: Additional attributes related to the proposal (e.g., setup details).
     LoginRequest:
       type: object
       required:
@@ -2005,35 +1704,36 @@ components:
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
         signature:
           type: string
-          description: User's signature in hexadecimal format.
+          description: User's signature (in hex format).
         siwe_msg:
           type: string
-          description: SIWE message in string format.
+          description: Sign-In With Ethereum (SIWE) message in string format.
     LoginResponse:
       type: object
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
         access_token:
           type: string
-          description: Access token used for Bearer authentication in the header.
+          description: Access token used for bearer authentication.
         refresh_token:
           type: string
-          description: Refresh token, with a long expiration time.
+          description: Refresh token for extended session access.
     Projects:
       type: object
       properties:
         projects:
           type: array
+          description: List of projects.
           items:
             $ref: '#/components/schemas/ProjectResource'
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
     ProjectResource:
       allOf:
         - $ref: '#/components/schemas/ProjectUpdate'
@@ -2045,9 +1745,9 @@ components:
           $ref: '#/components/schemas/Solver'
         deployed_workers:
           type: array
+          description: Array of deployed workers.
           items:
             $ref: '#/components/schemas/Worker'
-          description: If `workers_uuid` is provided, returns an array of workers; otherwise, returns a single worker.
     ProjectUpdate:
       type: object
       required:
@@ -2057,7 +1757,7 @@ components:
       properties:
         id:
           type: string
-          description: Project ID obtained from the blueprint smart contract.
+          description: Project ID from the blueprint smart contract.
         proposal_request_id:
           type: string
           description: On-chain proposal request ID.
@@ -2071,14 +1771,14 @@ components:
           description: Project name.
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
           example: "0x2975b28D83aBE09623e4ceb9522070B8bC10468a"
         target_performance:
           type: number
-          description: Target performance obtained from chatbot interaction.
+          description: Target performance value from the chatbot.
         pay_amount:
           type: number
-          description: Pay amount specified in the payment page.
+          description: Payment amount in the payment page.
         status:
           type: string
           description: Status of the project.
@@ -2093,40 +1793,49 @@ components:
             - terminated
         da_name:
           type: string
-          description: Name of the Data Availability (DA) solution.
+          description: Name of the DA (Data Availability).
           example: NearDA
         cost:
           type: number
-          description: Cost in USD.
+          description: Total cost (in USD).
         solver_uuid:
           type: string
-          description: Unique identifier (UUID) of the solver.
+          description: UUID of the solver.
         proposal_id:
           type: number
-          description: Proposal ID provided by the solver.
+          description: Proposal ID from the solver.
         workers_uuid:
           type: string
-          description: List of worker UUIDs separated by commas.
+          description: List of workers' UUIDs, separated by commas.
           example: "worker1,worker2"
         deployment_id:
           type: number
-          description: Deployer ID assigned by the worker.
+          description: ID of the deployment from the worker.
         pop:
           type: string
-          description: Point of presence, as specified by the frontend.
+          description: Point of presence (POP) from the frontend.
+        created_at:
+          type: string
+          description: Timestamp when the project was created.
+          readOnly: true
+        updated_at:
+          type: string
+          description: Timestamp when the project was last updated.
+          readOnly: true
         recommendation_param:
           type: object
-          description: Parameters for recommendation provided by the smart contract.
+          description: Recommendation parameters from the smart contract.
     Deployments:
       type: object
       properties:
         deployments:
           type: array
+          description: List of deployment details.
           items:
             $ref: '#/components/schemas/Deployment'
         user_address:
           type: string
-          description: user address  in hex
+          description: User's blockchain address (in hex format).
     Deployment:
       type: object
       required:
@@ -2135,35 +1844,36 @@ components:
       properties:
         id:
           type: number
-          description: Unique deployment identifier.
+          description: Deployment ID.
         request_id:
           type: string
-          description: Hexadecimal request ID from the blockchain.
+          description: Request ID from the blockchain.
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
           example: "0x2975b28D83aBE09623e4ceb9522070B8bC10468a"
         worker_name:
           type: string
-          description: Name of the worker handling the deployment.
+          description: Name of the worker involved in the deployment.
           example: worker1
         worker_uuid:
           type: string
-          description: Unique identifier (UUID) of the worker.
+          description: UUID of the worker involved in the deployment.
+          example: worker_uuid
         proposal_hash:
           type: string
-          description: SHA-256 hash of the proposal.
+          description: Proposal hash (SHA-256).
         proposal_id:
           type: integer
-          description: Unique identifier for the proposal.
+          description: Proposal ID.
         deployment_details:
           type: object
-          description: Deployment details in JSON format.
+          description: JSON object containing detailed deployment information.
         proposal:
           $ref: '#/components/schemas/Proposal'
-        status:
+        Status:
           type: string
-          description: Deployment status.
+          description: Status of the deployment.
           enum:
             - init
             - pick_up
@@ -2175,24 +1885,25 @@ components:
       properties:
         address:
           type: string
-          description: Solver's blockchain address in hexadecimal format.
+          description: Solver's blockchain address (in hex format).
         uuid:
           type: string
-          description: Unique identifier (UUID) of the solver.
+          description: UUID of the solver.
         name:
           type: string
           description: Name of the solver.
         reputation:
           type: number
-          description: Reputation score of the solver.
+          description: Solver's reputation score.
         logo_url:
           type: string
-          description: URL of the solver's logo.
+          description: URL to the solver's logo.
         total_staked:
           type: number
-          description: Total amount staked by the solver.
+          description: Total staked by the solver.
     Workers:
       type: array
+      description: List of workers.
       items:
         $ref: '#/components/schemas/Worker'
     Worker:
@@ -2200,77 +1911,53 @@ components:
       properties:
         address:
           type: string
-          description: Worker's blockchain address in hexadecimal format.
+          description: Worker's blockchain address (in hex format).
         uuid:
           type: string
-          description: Unique identifier (UUID) of the worker.
+          description: UUID of the worker.
         name:
           type: string
           description: Name of the worker.
         total_earned:
           type: number
-          description: Total earnings of the worker.
+          description: Total earned by the worker.
         logo_url:
           type: string
-          description: URL of the worker's logo.
+          description: URL to the worker's logo.
         total_staked:
           type: number
-          description: Total amount staked by the worker.
+          description: Total staked by the worker.
     APIKey:
       type: object
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: Requesting user's blockchain address (in hex format).
         api_key:
           type: string
           description: Generated API key.
-    WhiteLists:
-      type: array
-      items:
-        $ref: '#/components/schemas/whiteList'
-    whiteList:
-      type: object
-      properties:
-        address:
-          type: string
-          description: Blockchain address on the whitelist.
-        name:
-          type: string
-          description: Data Availability (DA) name.
-          example: EigenDA
-        network_type:
-          type: string
-          description: Type of network.
-          enum:
-            - Mainnet
-            - Testnet
-        created_at:
-          type: string
-          description: Timestamp of creation.
     Chat:
       type: object
       properties:
         project_id:
           type: string
-          description: Unique project identifier.
+          description: Project ID associated with the chat.
         message:
           type: string
-          description: Chat message exchanged between sender and bot.
+          description: Chat message between the sender and the bot.
         status:
           type: string
-          description: Status of the chat.
-          example: ONGOING, COMPLETE, CANCEL
+          description: Status of the chat (e.g., ONGOING, COMPLETE, CANCEL).
         target_performance:
           type: object
-          description: JSON object specifying target performance with units.
+          description: JSON object detailing target performance metrics.
         sender:
           type: string
-          description: Address of the sender in hexadecimal format or "bot".
+          description: Sender's blockchain address or identifier (e.g., bot).
           example: bot/0x2975b28D83aBE09623e4ceb9522070B8bC10468a
         created_at:
           type: string
-          description: Timestamp of chat creation.
+          description: Timestamp when the chat was created.
     ChatRequest:
       type: object
       required:
@@ -2279,21 +1966,19 @@ components:
       properties:
         message:
           type: string
-          description: Message content for the request.
+          description: Chat message content.
         project_id:
           type: string
-          description: Project identifier.
-          minLength: 3
+          description: Project ID related to the chat request.
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
-          minLength: 3
+          description: User's blockchain address (in hex format).
     Address:
       type: object
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: Requesting user's blockchain address (in hex format).
     Scores:
       type: array
       items:
@@ -2303,87 +1988,95 @@ components:
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
         total_point:
           type: number
-          description: Total award points received.
+          description: Total points awarded to the user.
         rank:
           type: number
-          description: User's rank based on points.
+          description: User's rank.
     Token:
       type: object
       properties:
         refresh_token:
           type: string
-          description: Newly issued refresh token.
+          description: New refresh token for the user.
         access_token:
           type: string
-          description: Newly issued access token.
+          description: New access token for the user.
     User:
       type: object
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: User's blockchain address (in hex format).
         total_point:
           type: number
           description: Total points awarded to the user.
         quests:
           type: number
-          description: Total number of completed quests.
+          description: Total number of quests completed by the user.
         rank:
           type: number
-          description: User's ranking based on their achievements.
+          description: User's rank.
         github:
           type: string
-          description: GitHub profile link of the user.
+          description: User's GitHub profile link.
         total_invited:
           type: number
           description: Total number of users invited by this user.
         subscribe:
           type: boolean
-          description: Indicates whether the user is subscribed.
+          description: Subscription status of the user.
+        is_referred:
+          type: boolean
+          description: Whether the user was referred by someone.
+        referred_at:
+          type: string
+          description: Timestamp of when the user was referred.
+          example: 2024-04-26T12:56:41.240582
+        last_award_updated:
+          type: string
+          description: Timestamp of the user's last award update.
     MetadataMetric:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          description: Unique identifier for the metric.
         category:
           type: string
           enum:
             - public_info
             - unverified
             - verified
-          description: Category of the metadata metric.
         show_in_chart:
           type: boolean
-          description: Indicates if this metric should be shown in charts.
+          description: Indicates whether this metric should be shown in a chart.
         order_in_chart:
           type: integer
-          description: Position in chart, where smaller values are closer to the front.
+          description: Determines the order of the metric in the chart (smaller numbers are closer to the front).
         show_in_table:
           type: boolean
-          description: Indicates if this metric should be shown in tables.
+          description: Indicates whether this metric should be shown in a table.
         order_in_table:
           type: integer
-          description: Position in table, where smaller values are closer to the front.
+          description: Determines the order of the metric in the table (smaller numbers are closer to the front).
         field_name:
           type: string
           description: Field name in the API JSON response.
         display_name:
           type: string
-          description: Name displayed on the user interface.
+          description: Name displayed in the UI.
         description:
           type: string
-          description: Tooltip description displayed when the cursor hovers over the title.
+          description: Tooltip description shown when hovering over the title.
         unit_in_name:
           type: string
-          description: Units displayed next to the name for better styling control.
+          description: Unit displayed next to the name, if applicable.
         unit_in_value:
           type: string
-          description: Units displayed directly with the value.
+          description: Unit appended to the value.
         value_type:
           type: string
           enum:
@@ -2391,13 +2084,13 @@ components:
             - int
             - float
             - bool
-          description: Data type of the metric value.
+          description: Data type of the value.
         value_format:
           type: string
-          description: Format specification for the value.
+          description: Format of the value for display purposes.
         can_sort:
           type: boolean
-          description: Indicates if the metric can be sorted.
+          description: Whether this metric can be sorted in the UI.
     Quests:
       type: object
       properties:
@@ -2407,23 +2100,25 @@ components:
           description: Unique identifier for the quest.
         category:
           type: string
-          description: Quest category, such as "builder".
+          description: Category of the quest (e.g., builder).
           example: builder
         level:
           type: number
-          description: Difficulty level of the quest.
+          description: Level or difficulty of the quest.
           example: 1
         title:
           type: string
           description: Title of the quest.
+          example: KYW
         description:
           type: string
-          description: Description of the quest activity.
+          description: Description of the quest's objectives and requirements.
         rocks:
           type: number
-          description: Total number of "rocks" awarded per quest.
+          description: Total number of rocks (rewards) awarded for completing the quest.
         activity_action:
           type: string
+          description: Type of action associated with the quest.
           enum:
             - login
             - interact
@@ -2433,29 +2128,29 @@ components:
             - deploy.proposal
             - deployment.use
             - feedback
-          description: Activity type associated with the quest.
     UserQuest:
       type: object
       properties:
         start_time:
           type: string
-          description: Quest start time in UTC.
+          description: Timestamp indicating when the user started the quest.
           example: 2024-09-23T00:00:00Z
         end_time:
           type: string
-          description: Quest end time in UTC.
+          description: Timestamp indicating when the user completed the quest.
           example: 2024-09-23T00:00:00Z
         base_rocks:
           type: number
-          description: Total "rocks" awarded from completing quests.
+          description: Number of rocks (rewards) awarded for the quest.
         refer_rocks:
           type: number
-          description: Total "rocks" awarded through referrals.
+          description: Number of rocks awarded for referring others to the quest.
     UserPostQuests:
       type: object
       properties:
         user_quests:
           type: array
+          description: Array of user quests.
           items:
             $ref: '#/components/schemas/UserPostQuest'
     UserPostQuest:
@@ -2467,9 +2162,10 @@ components:
       properties:
         user_address:
           type: string
-          description: User's blockchain address in hexadecimal format.
+          description: Blockchain address of the user (in hex format).
         quest_activity_action:
           type: string
+          description: Action associated with the user’s quest.
           enum:
             - login
             - interact
@@ -2479,34 +2175,32 @@ components:
             - deploy.proposal
             - deployment.use
             - feedback
-          description: Activity type associated with the quest.
         quest_title:
           type: string
           description: Title of the quest.
         site:
           type: string
-          description: Site where the activity occurred.
+          description: URL or site where the quest takes place.
         chain_id:
           type: number
-          description: Blockchain network ID.
+          description: Blockchain network chain ID for the quest.
         total_complete:
           type: number
-          description: Number of times the quest activity was completed.
-
+          description: Total number of quest completions by the user.
     WeeklyQuests:
       type: object
       properties:
         start_time:
           type: string
-          description: Start time of the weekly quests in UTC.
+          description: Timestamp indicating the start of the weekly quests.
           example: 2024-09-23T00:00:00Z
         end_time:
           type: string
-          description: End time of the weekly quests in UTC.
+          description: Timestamp indicating the end of the weekly quests.
           example: 2024-09-23T00:00:00Z
         quests:
           type: array
-          description: A list of quests available during the week.
+          description: List of weekly quests.
           items:
             $ref: '#/components/schemas/Quests'
     Activity:
@@ -2514,15 +2208,14 @@ components:
       properties:
         action:
           type: string
-          description: Activity type performed by the user.
+          description: Type of action performed (e.g., login, chat).
           example: login, chat
         address:
           type: string
-          description: User's blockchain address.
-          example: User's blockchain address in hexadecimal format.
+          description: Blockchain address of the user who performed the action (in hex format).
         created_at:
           type: string
-          description: Timestamp when the activity was performed.
+          description: Timestamp indicating when the activity occurred.
           example: 2024-04-26T12:56:41.240582
     Referral:
       type: object
@@ -2532,36 +2225,36 @@ components:
           description: Unique identifier for the referral.
         referrer_address:
           type: string
-          description: Blockchain address of the referrer.
+          description: Blockchain address of the user who made the referral (in hex format).
         referred_address:
           type: string
-          description: Blockchain address of the referred user.
+          description: Blockchain address of the referred user (in hex format).
         code:
           type: string
           description: Referral code used by the referred user.
         activity_action:
           type: string
-          description: Action performed as part of the referral.
+          description: Action taken by the referred user.
           example: login
         claimed:
           type: boolean
-          description: Indicates whether the referral was claimed.
+          description: Whether the referral reward was claimed.
           example: false
         claimed_at:
           type: string
-          description: Timestamp when the referral was claimed.
+          description: Timestamp when the referral reward was claimed.
         active:
           type: boolean
-          description: Indicates if the referral is currently active.
+          description: Indicates whether the referral is active.
         created_at:
           type: string
-          description: Timestamp when the referral was created.
+          description: Timestamp indicating when the referral was created.
     CommonResponse:
       type: object
       properties:
         message:
           type: string
-          description: Descriptive message providing details about the response.
+          description: Response message providing details about the request result.
         status:
           type: string
-          description: Status of the response, indicating success or error.
+          description: Status of the response (e.g., success, failure).
