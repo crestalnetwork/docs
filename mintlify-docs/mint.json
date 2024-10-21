@@ -22,7 +22,7 @@
     },
     {
       "group": "🚀 Getting Started",
-      "pages": ["guides/testnet", "guides/quests"]
+      "pages": ["guides/testnet", "guides/quests", "guides/referrals"]
     },
     {
       "group": "🔐 API Reference",
