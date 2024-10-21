@@ -25,6 +25,12 @@
       "pages": ["guides/testnet", "guides/quests", "guides/referrals"]
     },
     {
+      "group": "🛠️ Build",
+      "pages": [
+        "build/rollup-avail-op-stack"
+      ]
+    },
+    {
       "group": "🔐 API Reference",
       "pages": [
         {
