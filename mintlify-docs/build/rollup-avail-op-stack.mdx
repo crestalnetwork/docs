@@ -3,11 +3,39 @@ title: Build a Rollup with Avail DA and OP Stack
 description: Learn how to build a rollup with Avail, including setting up the Avail Alt DA server, configuring the OP Stack, and deploying contracts.
 ---
 
-## Step 1: Set Up Your Avail Alt DA Server
+## Step 1: Get Your Avail Node with Crestal
+
+**Crestal** provides the Avail node for you, so you don’t need to set it up from scratch. 
+This node is essential for your rollup because it guarantees that all transaction data is properly stored and easily accessible. This Data Availability (DA) is critical for rollups to verify and confirm transactions.
+
+Here’s a short summary of how to get a deployed node using the Crestal Carbon testnet:
+
+1. Connect to Crestal: Visit the **[Crestal Carbon Testnet](https://app.testnet.crestal.xyz/dashboard)** and connect your EVM-compatible wallet.
+2. Get Test Tokens: Obtain testnet tokens from the Polygon Amoy or Berachain Bartio faucet.
+3. Use the AI Design Assistant: Define your infrastructure needs, such as DA services and execution stacks, with Crestal's AI.
+4. Submit to the Marketplace: Submit your design to the Crestal Intent-Based Marketplace for solver proposals.
+5. Deploy Node: Once a proposal is selected, Crestal will handle the deployment, and you’ll receive the necessary node parameters for integration.
+
+Please follow [this guide](/guides/testnet) for more detailed steps on how to get your own node.
+
+After the node is deployed, the node details will look like the ones bellow. The **WSS URL** will be needed to start the server on the next step,
+as it allows your rollup to communicate securely and in real-time with the Data Availability layer provided by Crestal’s Avail node
+
+
+```json
+{
+"token": "bea08b5e5ad9938ccd5be3a6379c294dbac724e772c58e9c2e2165ceb92218c0",
+"access_url": "https://avail-turing.service.testnet.crestal.xyz/bea08b5e5ad9938ccd5be3a6379c294dbac724e772c58e9c2e2165ceb92218c0",
+"server_https_url": "https://avail-turing.service.testnet.crestal.xyz",
+"server_web_socket_url": "wss://avail-turing.service.testnet.crestal.xyz"
+}
+```
+
+## Step 2: Set Up Your Avail Alt DA Server
 
 Before we even touch the OP Stack, we need to get the Avail Alt DA server up and running. This server is the key connection point to Avail’s Data Availability (DA) layer, which Crestal provides for you. Let’s set this up first.
 
-### 1.1 Create a New Wallet for Avail DA and Get Test Tokens
+### 2.1 Create a New Wallet for Avail DA and Get Test Tokens
 
 If you don’t have a wallet for Avail DA yet, no worries—we’ll get you started right here.
 
@@ -17,7 +45,7 @@ If you don’t have a wallet for Avail DA yet, no worries—we’ll get you star
 - **Get Avail Test Tokens:** Go to the [Avail Faucet](https://faucet.avail.tools/) and paste your new address to get some test tokens.
 - **Verify Your Tokens:** Head over to the [Avail Explorer](https://explorer.avail.so), make sure your wallet is connected, and confirm you’ve received the test tokens.
 
-### 1.2 Generate Your Own Avail DA App ID
+### 2.2 Generate Your Own Avail DA App ID
 
 Next, let’s register your app on Avail DA using an App ID. This ID is like your app’s unique identifier when interacting with the DA layer.
 
@@ -27,41 +55,39 @@ Next, let’s register your app on Avail DA using an App ID. This ID is like you
     - **owner:** `5E1qtvznhpcCoPzigNFqS5sqMHxo1VTXmX4YSR9yqCiqWrEg`
     - **id:** `135`
 
-### 1.3 Set Up the Avail Alt DA Server
+### 2.3 Set Up the Avail Alt DA Server with Crestal's node
 
-This server will handle all of your rollup’s data availability.
+This server will handle all of your rollup’s data availability. You will need the Avail node provided by Crestal at (step 1)[#step-1-get-your-avail-node-with-crestal]for this.
 
-- **Get Node Info:** Crestal provides the Avail node for you, so you don’t need to set it up from scratch. Simply follow [this guide](/guides/testnet) to get the node details, which will look like this:
-
-  ```json
-  {
-    "token": "bea08b5e5ad9938ccd5be3a6379c294dbac724e772c58e9c2e2165ceb92218c0",
-    "access_url": "https://avail-turing.service.testnet.crestal.xyz/bea08b5e5ad9938ccd5be3a6379c294dbac724e772c58e9c2e2165ceb92218c0",
-    "server_https_url": "https://avail-turing.service.testnet.crestal.xyz",
-    "server_web_socket_url": "wss://avail-turing.service.testnet.crestal.xyz"
-  }
-  ```
 - **Clone the Server Repository:** 
 ```bash
  git clone https://github.com/availproject/avail-alt-da-server.git 
  ```
 
-- **Start the Server:** Navigate to the `avail-alt-da-server` directory and run the following command:
+- **Start the Server:** 
+
+Firstly, make sure you have the WSS URL for your node. You can always find the node details by navigating to
+the **Deploy** section on the **[Crestal Carbon Testnet](https://app.testnet.crestal.xyz/dashboard)**, select
+your project, and click on **View Details** at the bottom-right corner of the page.
+
+![Node Details](../images/testnet-guide/testnet5.gif)
+
+Then navigate to the `avail-alt-da-server` directory and run the following command:
 
   ```bash
   ./bin/avail-da-server --addr=localhost --port=8000 \
-    --avail.rpc=wss://avail-turing.service.testnet.crestal.xyz \
+    --avail.rpc=wss://avail-turing.service.testnet.crestal.xyz/bea08b5e5ad9938ccd5be3a6379c294dbac724e772c58e9c2e2165ceb92218c0 \
     --avail.seed="YOUR_WALLET_SEED_PHRASE_HERE" \
     --avail.appid=135
   ```
 
   Here’s a breakdown of the command:
   - `--addr=localhost --port=8000`: Runs the server locally on port 8000.
-  - `--avail.rpc`: This is the URL of the Avail RPC node provided by Crestal.
+  - `--avail.rpc`: This is the WSS URL of the Avail node provided by Crestal.
   - `--avail.seed`: Use your wallet’s seed phrase here.
   - `--avail.appid=135`: Replace `135` with your own App ID.
 
-### 1.4 Verify the DA Server is Running
+### 2.4 Verify the DA Server is Running
 
 After starting the DA server, you should see logs confirming that it’s connected to the Avail network:
 
@@ -71,7 +97,7 @@ INFO [10-17|22:59:06.935] Connecting to wss://avail-turing.service.testnet.crest
 INFO [10-17|22:59:09.534] Started DA Server
 ```
 
-## Step 2: Create an Infura Account for the Ethereum Sepolia Node
+## Step 3: Create an Infura Account for the Ethereum Sepolia Node
 
 Now that the DA server is running, you’ll need an Infura account to interact with Ethereum’s Sepolia testnet.
 
@@ -85,7 +111,7 @@ Your Sepolia node URL will look like this:
 https://sepolia.infura.io/v3/your-infura-project-id
 ```
 
-## Step 3: Building the Optimism Adapter Source
+## Step 4: Building the Optimism Adapter Source
 
 Now that the DA server is running, let’s build the adapter source for Optimism. Clone the Optimism repo and build the required components.
 
@@ -102,7 +128,7 @@ make build
 
 With these commands, you’ll have the OP stack components (node, batcher, proposer) ready to go for your rollup.
 
-## Step 4: Building Geth
+## Step 5: Building Geth
 
 This will help with syncing your rollup chain.
 
@@ -122,7 +148,7 @@ GORUN = /opt/homebrew/opt/go@1.22/bin/go run
 
 This ensures your Go environment is properly set up.
 
-## Step 5: Generating and Securing Keys
+## Step 6: Generating and Securing Keys
 
 Generate the keys for your rollup roles: Admin, Proposer, Batcher, and Sequencer.
 
@@ -143,9 +169,9 @@ Private key: 0x9ef007ab575cd12aaeac661fb6f2c7b36a33a7e6a174f3f038015b76e58063bd
 
 Make sure to save all the keys somewhere safe.
 
-## Step 6: Configuring Crestal’s Avail Node
+## Step 7: Network Configuration and Setup
 
-Configure the environment to connect to Crestal’s Avail DA node. Create a `.envrc` file and add these variables:
+After building the necessary repositories, the next step is to configure your chain settings. Create a `.envrc` file and add these variables:
 
 ```bash
 # Admin account
@@ -182,9 +208,9 @@ Activate the environment:
 direnv allow .
 ```
 
-## Step 7: Deploying Contracts
+## Step 8: Deploying Contracts
 
-### 7.1 Generate Deployment Config
+### 8.1 Generate Deployment Config
 
 Head over to the `packages/contracts-bedrock` directory and run:
 
@@ -194,7 +220,7 @@ Head over to the `packages/contracts-bedrock` directory and run:
 
 This generates a file called `getting_started.json` in the `deploy-config` folder.
 
-### 7.2 Update the Configuration
+### 8.2 Update the Configuration
 
 Open the `getting_started.json` file and add this at the bottom:
 
@@ -209,7 +235,7 @@ Open the `getting_started.json` file and add this at the bottom:
 }
 ```
 
-### 7.3 Deploy Your Contracts
+### 8.3 Deploy Your Contracts
 
 Run the following command in the `packages/contracts-bedrock` directory:
 
@@ -219,9 +245,9 @@ DEPLOY_CONFIG_PATH=deploy-config/getting-started.json \
 forge script scripts/deploy/Deploy.s.sol:Deploy --broadcast --private-key $GS_ADMIN_PRIVATE_KEY --rpc-url $L1_RPC_URL --slow
 ```
 
-## Step 8: Running the Rollup Components
+## Step 9: Running the Rollup Components
 
-### 8.1 Run Geth
+### 9.1 Run Geth
 
 ```bash
 cd ~/Desktop/op-geth
@@ -253,7 +279,7 @@ build/bin/geth init --datadir=datadir --state.scheme=hash genesis.json
   --cache=2048
 ```
 
-### 8.2 Run the OP Node
+### 9.2 Run the OP Node
 
 ```bash
 cd ~/Desktop/optimism/op-node
@@ -273,7 +299,7 @@ cd ~/Desktop/optimism/op-node
   --altda.da-server=http://localhost:8000
 ```
 
-### 8.3 Run the OP Batcher
+### 9.3 Run the OP Batcher
 
 ```bash
 cd ~/Desktop/optimism/op-batcher
@@ -286,7 +312,7 @@ cd ~/Desktop/optimism/op-batcher
   --altda.da-server=http://localhost:8000
 ```
 
-### 8.4 Run the OP Proposer
+### 9.4 Run the OP Proposer
 
 Grab the `L2OutputOracleProxy` address from your `[chain-id]-deploy.json` file, located at `packages/contracts-bedrock/deployments`.
 
@@ -303,7 +329,7 @@ cd ~/Desktop/optimism/op-proposer
   --l1-eth-rpc=$L1_RPC_URL
 ```
 
-## Step 9: Adding Your Rollup Network to the Wallet
+## Step 10: Adding Your Rollup Network to the Wallet
 
 Finally, add your custom rollup to a wallet like MetaMask and start playing with your new network!
 
