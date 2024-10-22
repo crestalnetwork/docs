@@ -3,6 +3,29 @@ title: Build a Rollup with Avail DA and OP Stack
 description: Learn how to build a rollup with Avail, including setting up the Avail Alt DA server, configuring the OP Stack, and deploying contracts.
 ---
 
+## Prerequisites
+
+For **macOS**, the installation commands below use **Homebrew**. If you don’t have Homebrew installed, you can install it by running the following command in your terminal:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+For **Ubuntu**, the installation commands below use `apt` to install the required software.
+
+Once Homebrew or `apt` is set up, you can use the commands in the table below to install the required software.
+
+| Software | Version   | macOS (Homebrew)                                      | Ubuntu                                                                                                                                                                                                                      |
+|----------|-----------|-------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Git      | OS default | `brew install git`                                   | `sudo apt install -y git curl make jq`                                                                                                                                                                                      |
+| Go       | 1.21      | `brew install go@1.21`                                | `wget https://go.dev/dl/go1.21.linux-amd64.tar.gz && tar xvzf go1.21.linux-amd64.tar.gz && sudo cp go/bin/go /usr/bin/go && sudo mv go /usr/lib && echo export GOROOT=/usr/lib/go >> ~/.bashrc`                              |
+| Node.js  | ^20       | `brew install node`                                   | `curl -fsSL https://deb.nodesource.com/setup_16.x \| sudo -E bash - && sudo apt-get install -y nodejs npm`                                                                                                                   |
+| Pnpm     | 8.5.6     | `npm install -g pnpm`                                 | `sudo npm install -g pnpm`                                                                                                                                                                                                  |
+| Make     | OS default | `xcode-select --install`                             | `sudo apt install -y make`                                                                                                                                                                                                  |
+| jq       | OS default | `brew install jq`                                    | `sudo apt install -y jq`                                                                                                                                                                                                    |
+| direnv   | Latest    | `brew install direnv`                                 | `sudo apt install -y direnv`                                                                                                                                                                                                |
+| Foundry  | ^0.2.0    | `curl -L https://foundry.paradigm.xyz \| bash`        | `curl -L https://foundry.paradigm.xyz \| bash`                                                                                                                                                                              |
+
 ## Step 1: Get Your Avail Node with Crestal
 
 **Crestal** provides the Avail node for you, so you don’t need to set it up from scratch. 
