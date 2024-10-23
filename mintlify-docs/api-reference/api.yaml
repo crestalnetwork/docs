@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Crestal dashboard API - /crestal - OpenAPI 3.0
-  description: This is a crestal-dashboard-backend server.
+  description: This is a crestal-dashboard-backend server. test
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
