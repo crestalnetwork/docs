@@ -107,5 +107,11 @@
     "youtube": "https://www.youtube.com/@Crestalnetwork",
     "github": "https://github.com/crestalnetwork",
     "linkedin": "https://www.linkedin.com/company/crestal"
-  }
+  },
+  "analytics": {
+    "ga4": {
+        "measurementId": "G-SH3W021CDQ"
+    }
+}
+
 }
