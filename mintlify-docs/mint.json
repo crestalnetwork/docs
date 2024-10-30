@@ -25,9 +25,21 @@
       "pages": ["guides/testnet", "guides/quests", "guides/referrals"]
     },
     {
+      "group": "🌐 Networks",
+      "pages": [
+        "networks/supported-networks"
+      ]
+    },
+    {
       "group": "🛠️ Build",
       "pages": [
         "build/rollup-avail-op-stack"
+      ]
+    },
+    {
+      "group": "🧠 Solvers",
+      "pages": [
+        "solvers/solver-worker-integration"
       ]
     },
     {

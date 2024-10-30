@@ -1,0 +1,367 @@
+---
+title: Solver Worker Integration
+description: Learn how to integrate with Crestal as a DA provider - from listening to proposal requests to submitting your DA solution.
+---
+
+## Step 1: Install CrestalJS SDK
+
+Install the NPM CrestalJS SDK by using one of the following commands:
+
+```bash
+// NPM
+npm install crestal-js-sdk
+
+// YARN
+yarn add crestal-js-sdk
+```
+
+In case you want to build from source:
+
+```bash
+git clone https://github.com/crestalnetwork/crestal-js-sdk.git
+npm install
+npm run build
+```
+
+### JavaScript Projects
+
+No additional configuration needed. You can start using the SDK package right away.
+
+### TypeScript Projects
+
+Add these essential compiler options to your `tsconfig.json`:
+
+```typescript
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "paths": {
+      "crestal-js-sdk/*": [
+        "./node_modules/crestal-js-sdk/dist/types/*"
+      ]
+    }
+  }
+}
+```
+
+### Import Functions
+
+```JavaScript
+// Using ESM (import)
+import { SOME_FUNCTION } from 'crestal-js-sdk/utils';
+
+// OR using CommonJS (require)
+const { SOME_FUNCTION } = require('crestal-js-sdk/utils');
+```
+
+
+## Step 2: Listen for Proposal Requests
+
+To initiate the proposal request process, the Solver listens for `RequestProposal` events on the designated networks: **Berachain**, **Polygon Amoy**, or **Binance Testnet**. 
+Read more about networks supported on our platform [here](/networks/supported-networks).
+
+Each network has a dedicated listener:
+
+- `utils/bscTestnetEventListener`
+- `utils/beraEventListener`
+- `utils/polygonAmoyEventListener`
+
+When a `RequestProposal` event is detected, you should see output similar to this:
+
+```bash
+Listening for RequestProposal events...
+RequestProposal Event Detected
+{
+  projectID: '0x******92c7e6242fa5ac445f9059178',
+  walletAddress: '0xBB900BbE1A20dA4d474666B79a5fa6CE12629733',
+  requestID: '0xaf4c******8dd5aa458391ff6b29e62b2',
+  chainRequestParam: {
+    project_id: '0x******92c7e6242fa5ac445f9059178',
+    types: [ 'DA' ],
+    cost_per_mb: 0.5,
+    max_throughput: 500,
+    number_of_nodes: 750,
+    send_blob_latency: 1.5,
+    finality_time: 15,
+    latency: 0,
+    block_time: 0,
+    first_category: 'Layer_2',
+    second_category: 'General'
+  },
+  serverURL: 'https://api.service.testnet.crestal.xyz',
+  raw: {
+    filter: 'RequestProposal',
+    emitter: Contract {
+      target: '0x******11AA5516d7',
+      ...
+    },
+    log: {
+      transactionHash: '0xc15******d24233b4b561e',
+      blockHash: '0xdea******268d5e2c75b',
+      blockNumber: 6016102,
+      ...
+    },
+    args: [
+      '0x******92c7e6242fa5ac445f9059178',
+      '0xBB900BbE1A20dA4d474666B79a5fa6CE12629733',
+      '0xaf4c******8dd5aa458391ff6b29e62b2',
+      'eyJ******ZW5lcmFsIn0=',
+      'https://api.service.testnet.crestal.xyz'
+    ]
+  }
+}
+```
+The listener automatically decodes the `base64RecParam` included in the event.
+This decoded parameter, of type `ChainRequestParam`, provides chain-specific metrics essential for building a proposal.
+It contains the specific requirements that your DA solution needs to address. Consider these parameters as the project's minimum requirements. 
+The closer your solution matches or exceeds these parameters, the higher your fit score should be.
+
+
+Request Proposal Structure (GO):
+
+```bash
+type SolverRequestProposal struct {
+   ProjectID      [32]byte         // Unique identifier for the project
+   WalletAddress  common.Address   // Ethereum wallet address of the requester
+   RequestID      [32]byte         // Unique request identifier
+   Base64RecParam string           // Encoded parameters for request
+   ServerURL      string           // URL of the server for handling requests
+   Raw            types.Log        // Blockchain-specific contextual information
+}
+```
+
+
+## Step 3: Build the Proposal
+
+After receiving a request, the solver generates proposals by evaluating different DA solutions and submitting them in the following format:
+```typescript
+interface PostProposal {
+  project_id?: string;          // Project identifier from the request
+  request_id?: string;          // Request identifier from the event
+  target_performance?: number;   // Target performance metric
+  solver_address?: string;      // Solver's wallet address
+  proposals?: Proposal[];       // Array of ranked proposals
+}
+```
+
+Each proposal in the proposals array contains:
+
+```typescript
+interface Proposal {
+  fit?: number;           // Calculated fitness score (0-1)
+  rank?: number;          // Proposal rank based on fit
+  type?: string;          // 'private' or 'public', if 'public' no need to mention worker address
+  da?: DAProposal;       // DA solution details
+}
+```
+
+The DAProposal interface defines all metrics for a DA solution:
+
+```typescript
+interface DAProposal {
+  // Basic Info
+  da_name?: string;              // e.g., 'celestia'
+  chain_id?: number;
+  project_id?: string;
+  
+  // Cost Metrics
+  error_rate?: number;           // e.g., 0.02
+  init_cost?: number;
+  maintenance_cost?: number;
+  accept_currencies?: string;
+  
+  // Performance Metrics
+  network_type: string;          // 'Mainnet' or 'Testnet'
+  gas_token?: string;
+  avg_cost?: number;
+  max_throughput?: number;
+  latency?: number;
+  finality_time?: number;
+  geo_coverage?: number;
+  
+  // Network Stats
+  uptime?: number;
+  block_time?: number;
+  total_transactions?: number;
+  number_of_nodes?: number;
+  
+  // Cost Analysis
+  cost_per_transaction?: number;
+  cost_per_mb?: number;
+  gas_per_mb?: number;
+  
+  // Additional Metrics
+  send_blob_latency?: number;
+  total_data_transacted?: number;
+}
+```
+
+
+### Calculate Your Metrics
+
+Provide accurate data about your DA solution's capabilities. Key metrics include the following:
+
+#### Performance Metrics
+
+- **`max_throughput`**: Maximum data processing capacity.
+- **`latency`**: Network response time.
+- **`finality_time`**: Time taken for transaction finality.
+- **`send_blob_latency`**: Data blob transmission time.
+- **`block_time`**: Average time between blocks.
+
+#### Cost Structure
+
+- **`init_cost`**: Initial setup costs.
+- **`maintenance_cost`**: Ongoing maintenance fees.
+- **`cost_per_mb`**: Data storage costs.
+- **`cost_per_transaction`**: Transaction fees.
+
+#### Network Statistics
+
+- **`number_of_nodes`**: Number of active nodes in the network.
+- **`uptime`**: Network availability.
+- **`error_rate`**: Measure of system reliability.
+
+> **Note**: Not all metrics are mandatory. Focus on the parameters that are most relevant to your DA solution and align with the specific request requirements.
+
+### Calculate Fit
+
+After computing your metrics, calculate how well your solution matches the request parameters:
+
+- **Compare your capabilities against the request requirements** to determine if your solution can meet the specified metrics.
+- **Calculate a fit score** between 0 and 1, representing how well your DA solution aligns with the requester’s needs.
+- **Consider cost-effectiveness and performance trade-offs** to provide an optimal solution balancing performance with cost.
+
+By following these steps, DA providers can ensure they submit comprehensive, relevant metrics and determine the suitability of their solutions for specific requests.
+
+
+## Step 4: Generate SIWE Message
+
+After preparing your proposal, you need to generate a Sign-In with Ethereum (SIWE) message. 
+Use the [generateProposalSIWE](https://github.com/crestalnetwork/crestal-js-sdk/blob/main/utils/generateProposalSIWE.ts) utility from the SDK:
+
+```typescript
+// ESM
+import { generateProposalSIWE } from 'crestal-js-sdk/utils';
+
+// CommonJS
+const { generateProposalSIWE } = require('crestal-js-sdk/utils');
+```
+
+### Usage
+
+Call the function with your proposal data:
+
+```typescript
+const postSolverProposal = {
+  project_id: "0x6119******f11f",
+  request_id: "0x8531******e01f",
+  proposals: [
+    {
+      fit: 0.9,
+      rank: 1,
+      type: "public",
+      da: {
+        // Your DA metrics here
+      }
+    }
+  ]
+};
+
+const solverAddress = "0xYourSolverAddress";
+const chainId = 80084; // Example: Berachain Bartio testnet
+
+const siweMessage = await generateProposalSIWE(
+  postSolverProposal,
+  solverAddress,
+  chainId
+);
+```
+
+<Info>
+The SIWE message expires after 10 minutes. Make sure to use it before expiration.
+</Info>
+
+The function will:
+
+- Fetch a nonce from the API
+- Create a SIWE message containing your proposal
+- Return the prepared message string
+
+If the generation fails, it will return `undefined` and log the error.
+
+## Step 5: Sign the SIWE Message
+
+After generating the SIWE message, you need to sign it using your private key.
+Use the signMessageWithPrivateKey utility from the SDK:
+
+```typescript
+// ESM
+import { signMessageWithPrivateKey } from 'crestal-js-sdk/utils';
+
+// CommonJS
+const { signMessageWithPrivateKey } = require('crestal-js-sdk/utils');
+```
+### Usage
+
+Chain it with your SIWE message generation:
+
+```typescript
+// Generated SIWE message from the previous step
+const siweMessage = await generateProposalSIWE(
+  postSolverProposal,
+  solverAddress,
+  chainId
+);
+
+// Sign the message
+const privateKey = "your-private-key"; // Your solver's private key
+const signature = await signMessageWithPrivateKey(siweMessage, privateKey);
+```
+
+## Step 6: Submit the Proposal
+
+The final step is submitting your proposal using the generated SIWE message and signature.
+Use the `submitProposal` function from the SDK:
+
+```typescript
+// ESM
+import { submitProposal } from 'crestal-js-sdk/utils';
+
+// CommonJS
+const { submitProposal } = require('crestal-js-sdk/utils');
+```
+
+### Usage
+
+Here's how to chain all the previous steps together:
+
+```typescript
+// SIWE message and Signature generated in previous steps
+const siweMessage = await generateProposalSIWE(
+  postSolverProposal,
+  solverAddress,
+  chainId
+);
+
+const signature = await signMessageWithPrivateKey(siweMessage, privateKey);
+
+// Submit the proposal
+const response = await submitProposal(
+  solverAddress,
+  siweMessage,
+  signature
+);
+```
+<Info>
+The submission API handles the login request and proposal submission in one step.
+The API used can be found [here](/api-reference/accept-a-list-of-proposals-from-solvers).
+</Info>
+
+The function will return:
+- The response data if successful
+- An error object if submission fails
+
+After following all these steps, you're ready to submit proposals as a DA provider on the Crestal network.
