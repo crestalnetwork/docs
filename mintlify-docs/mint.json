@@ -1,0 +1,130 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Crestal Documentation",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "./favicon.svg",
+  "colors": {
+    "primary": "#7AB800",
+    "light": "#B4E034",
+    "dark": "#B4E034",
+    "anchors": {
+      "from": "#7AB800",
+      "to": "#5A8600"
+    }
+  },
+  "navigation": [
+    {
+      "group": "",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "🚀 Getting Started",
+      "pages": ["guides/testnet", "guides/quests", "guides/referrals"]
+    },
+    {
+      "group": "🌐 Networks",
+      "pages": [
+        "networks/supported-networks"
+      ]
+    },
+    {
+      "group": "🛠️ Build",
+      "pages": [
+        "build/rollup-avail-op-stack"
+      ]
+    },
+    {
+      "group": "🧠 Integrations",
+      "pages": [
+        "solvers/solver-worker-integration",
+        "solvers/solver-integration-quick-guide"
+      ]
+    },
+    {
+      "group": "🔐 API Reference",
+      "pages": [
+        {
+          "group": "Authentication APIs",
+          "pages": [
+            "api-reference/get-health_check",
+            "api-reference/retrieve-nonce-for-authentication",
+            "api-reference/authenticate-and-obtain-session-cookie",
+            "api-reference/refresh-authentication-token"
+          ]
+        },
+        {
+          "group": "Project Management APIs",
+          "pages": [
+            "api-reference/create-new-project-information",
+            "api-reference/terminate-a-project",
+            "api-reference/cancel-a-project",
+            "api-reference/retrieve-project-information",
+            "api-reference/update-project-information",
+            "api-reference/retrieve-a-list-of-user-projects"
+          ]
+        },
+        {
+          "group": "Deployment APIs",
+          "pages": [
+            "api-reference/retrieve-deployment-information",
+            "api-reference/retrieve-deployments-based-on-various-parameters",
+            "api-reference/create-deployment-information",
+            "api-reference/retrieve-worker-deployments-by-request-id",
+            "api-reference/create-worker-deployment-information",
+            "api-reference/update-worker-deployment-status"
+          ]
+        },
+        {
+          "group": "Data Availability APIs",
+          "pages": [
+            "api-reference/store-da-dynamic-data",
+            "api-reference/list-data-availability-da-dynamic-data",
+            "api-reference/create-da-dynamic-data",
+            "api-reference/retrieve-da-static-information-temporary-endpoint",
+            "api-reference/retrieve-da-static-information",
+            "api-reference/retrieve-da-graph-information"
+          ]
+        },
+        {
+          "group": "Proposals APIs",
+          "pages": [
+            "api-reference/retrieve-recommended-proposals-from-solvers",
+            "api-reference/retrieve-a-proposal-by-id",
+            "api-reference/retrieve-recommended-proposals-from-solvers-1",
+            "api-reference/accept-a-list-of-proposals-from-solvers",
+            "api-reference/create-a-new-proposal"
+          ]
+        },
+        {
+          "group": "Quests APIs",
+          "pages": [
+            "api-reference/retrieve-weekly-quests-for-all-users",
+            "api-reference/retrieve-user-referral-information",
+            "api-reference/claim-a-referral-code"
+          ]
+        },
+        {
+          "group": "Metadata APIs",
+          "pages": [
+            "api-reference/metadata/get-all-metadata-metrics"
+          ]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://x.com/crestalnetwork",
+    "youtube": "https://www.youtube.com/@Crestalnetwork",
+    "github": "https://github.com/crestalnetwork",
+    "linkedin": "https://www.linkedin.com/company/crestal"
+  },
+  "analytics": {
+    "ga4": {
+        "measurementId": "G-SH3W021CDQ"
+    }
+}
+
+}

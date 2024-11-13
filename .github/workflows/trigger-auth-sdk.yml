@@ -1,0 +1,19 @@
+name: Notify Auth SDK on API Change
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "mintlify-docs/api-reference/api.yaml" 
+jobs:
+  trigger_update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Update SDK Workflow in Auth SDK
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.AUTOGEN_GITHUB_TOKEN }}" \
+            https://api.github.com/repos/crestalnetwork/crestal-js-sdk/dispatches \
+            -d '{"event_type":"update-api-file"}'
