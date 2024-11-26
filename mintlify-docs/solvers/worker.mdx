@@ -1,6 +1,6 @@
 ---
-title: Worker DA Integration
-description: This guide provides a comprehensive overview of Crestal's worker deployment process, including the architecture, smart contract functions, and API integrations.
+title: "Worker Integration: Data Availability"
+description: "This guide provides a comprehensive overview of Crestal's worker deployment process, including the architecture, smart contract functions, and API integrations."
 ---
 
 ## Roles and Responsibilities
@@ -28,6 +28,11 @@ description: This guide provides a comprehensive overview of Crestal's worker de
 ---
 
 ## Deployment Workflow
+
+![Simple Workflow](../images/worker-guide/worker9.png)
+
+![Detailed Workflow](../images/worker-guide/worker10.png)
+
 
 1. **Builder (via API or Crestal Frontend)** triggers the Blueprint smart contract by requesting a proposal deployment
 with the following parameters:
@@ -228,6 +233,23 @@ with the following parameters:
             description?: string;
             machine_info?: MachineInfo;
             service_info?: ServiceInfo;
+            };
+
+        export type MachineInfo = {
+            mac_address: string;
+            cloud_provider: string;
+            unique_id: string;
+            };
+
+        export type ServiceInfo = {
+            api_infos: APIInfo[];
+            };
+
+        export type APIInfo = {
+            endpoint: string;
+            method: string;
+            request?: string;
+            response?: string;
             };
         ```
      - Syncs the proof of deployment with the Crestal backend via `/v1/deployments/worker/status` using

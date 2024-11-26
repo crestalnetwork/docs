@@ -41,7 +41,8 @@
       "pages": [
         "solvers/solver-worker-integration",
         "solvers/solver-integration-quick-guide",
-        "solvers/worker"
+        "solvers/worker",
+        "solvers/worker-guide"
       ]
     },
     {
