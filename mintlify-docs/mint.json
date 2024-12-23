@@ -40,7 +40,9 @@
       "group": "🧠 Integrations",
       "pages": [
         "solvers/solver-worker-integration",
-        "solvers/solver-integration-quick-guide"
+        "solvers/solver-integration-quick-guide",
+        "solvers/worker",
+        "solvers/worker-guide"
       ]
     },
     
