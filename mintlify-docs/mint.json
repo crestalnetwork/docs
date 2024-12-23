@@ -43,78 +43,112 @@
         "solvers/solver-integration-quick-guide"
       ]
     },
+    
+    
     {
       "group": "🔐 API Reference",
       "pages": [
         {
           "group": "Authentication APIs",
           "pages": [
-            "api-reference/get-health_check",
-            "api-reference/retrieve-nonce-for-authentication",
-            "api-reference/authenticate-and-obtain-session-cookie",
-            "api-reference/refresh-authentication-token"
+            "api-reference/check-system-health",
+            "api-reference/get-auth-nonce",
+            "api-reference/authenticate-user",
+            "api-reference/refresh-auth-token"
           ]
         },
         {
           "group": "Project Management APIs",
           "pages": [
-            "api-reference/create-new-project-information",
+            "api-reference/list-user-projects",
+            "api-reference/create-new-project",
             "api-reference/terminate-a-project",
-            "api-reference/cancel-a-project",
-            "api-reference/retrieve-project-information",
-            "api-reference/update-project-information",
-            "api-reference/retrieve-a-list-of-user-projects"
+            "api-reference/cancel-an-active-project",
+            "api-reference/get-project-details",
+            "api-reference/update-project-details"
           ]
         },
         {
           "group": "Deployment APIs",
           "pages": [
             "api-reference/retrieve-deployment-information",
-            "api-reference/retrieve-deployments-based-on-various-parameters",
-            "api-reference/create-deployment-information",
-            "api-reference/retrieve-worker-deployments-by-request-id",
-            "api-reference/create-worker-deployment-information",
+            "api-reference/list-deployments",
+            "api-reference/fetch-worker-deployment-status",
+            "api-reference/create-worker-deployment",
             "api-reference/update-worker-deployment-status"
           ]
         },
         {
           "group": "Data Availability APIs",
           "pages": [
-            "api-reference/store-da-dynamic-data",
-            "api-reference/list-data-availability-da-dynamic-data",
-            "api-reference/create-da-dynamic-data",
-            "api-reference/retrieve-da-static-information-temporary-endpoint",
-            "api-reference/retrieve-da-static-information",
-            "api-reference/retrieve-da-graph-information"
+            "api-reference/record-node-da-metrics",
+            "api-reference/retrieve-system-metrics-for-da",
+            "api-reference/create-da-metrics-record",
+            "api-reference/fetch-legacy-da-information",
+            "api-reference/fetch-static-configuration-for-da",
+            "api-reference/retrieve-historical-performance-metrics-for-da"
           ]
         },
         {
           "group": "Proposals APIs",
           "pages": [
-            "api-reference/retrieve-recommended-proposals-from-solvers",
-            "api-reference/retrieve-a-proposal-by-id",
-            "api-reference/retrieve-recommended-proposals-from-solvers-1",
-            "api-reference/accept-a-list-of-proposals-from-solvers",
-            "api-reference/create-a-new-proposal"
+            "api-reference/retrieve-proposal-details",
+            "api-reference/retrieve-solver-proposal-recommendations",
+            "api-reference/submit-solver-proposals"
           ]
         },
         {
-          "group": "Quests APIs",
+          "group": "Worker and Solver APIs",
           "pages": [
-            "api-reference/retrieve-weekly-quests-for-all-users",
-            "api-reference/retrieve-user-referral-information",
-            "api-reference/claim-a-referral-code"
+            "api-reference/list-active-workers",
+            "api-reference/retrieve-worker-details",
+            "api-reference/fetch-solver-details"
           ]
         },
         {
-          "group": "Metadata APIs",
+          "group": "Chat APIs",
           "pages": [
-            "api-reference/metadata/get-all-metadata-metrics"
+            "api-reference/retrieve-chat-history",
+            "api-reference/send-chat-message"
+          ]
+        },
+        {
+          "group": "Quest APIs",
+          "pages": [
+            "api-reference/list-available-quests",
+            "api-reference/retrieve-user-quest-progress",
+            "api-reference/retrieve-weekly-quest-status"
+          ]
+        },
+        {
+          "group": "Referral APIs",
+          "pages": [
+            "api-reference/fetch-referral-information",
+            "api-reference/process-referral-code-claim"
+          ]
+        },
+        {
+          "group": "Whitelist APIs",
+          "pages": [
+            "api-reference/check-whitelist-status"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Metadata",
+      "pages": [
+        {
+          "group": "System Metrics",
+          "pages": [
+            "api-reference/metadata/retrieve-comprehensive-system-metrics"
           ]
         }
       ]
     }
-  ],
+      ]
+    
+  ,
   "footerSocials": {
     "twitter": "https://x.com/crestalnetwork",
     "youtube": "https://www.youtube.com/@Crestalnetwork",
