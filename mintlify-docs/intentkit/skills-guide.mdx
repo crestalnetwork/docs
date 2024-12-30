@@ -1,0 +1,177 @@
+---
+title: 'Skills Setup: Creation and Customization'
+description: 'Create and manage custom skills for IntentKit agents'
+---
+
+# Understanding Skills
+
+Skills are the building blocks of agent capabilities, implemented as Python modules that extend agent functionality through LangChain tools.
+
+## Basic Structure
+
+```python
+from langchain_core.tools import BaseTool
+from pydantic import BaseModel, Field
+
+class WeatherInput(BaseModel):
+    """Input schema for weather skill."""
+    location: str = Field(..., description="City name")
+    unit: str = Field("celsius", description="Temperature unit")
+
+class WeatherSkill(BaseTool):
+    name = "get_weather"
+    description = "Get current weather for a location"
+    args_schema = WeatherInput
+    
+    def _run(self, location: str, unit: str = "celsius") -> str:
+        """Get weather data."""
+        return f"Weather in {location}: 20°{unit[0].upper()}"
+```
+
+## Skill Registration
+
+Register your skill in `skill/__init__.py`:
+
+```python
+from .weather import WeatherSkill
+
+def get_crestal_skill(name: str) -> BaseTool:
+    skills = {
+        "weather": WeatherSkill()
+    }
+    return skills.get(name)
+```
+
+## Common Skill Sets
+
+```json
+{
+  "cdp": {
+    "monitor_prices": {
+      "pairs": ["BTC-USD", "ETH-USD"],
+      "interval": 300
+    }
+  },
+  "social": {
+    "twitter": {
+      "auto_reply": true,
+      "sentiment_analysis": true
+    }
+  }
+}
+```
+
+## Examples
+
+### Price Monitoring Skill
+
+```python
+class PriceMonitorInput(BaseModel):
+    pair: str = Field(..., description="Trading pair (e.g., BTC-USD)")
+    threshold: float = Field(5.0, description="Alert threshold percentage")
+
+class PriceMonitorSkill(BaseTool):
+    name = "monitor_prices"
+    description = "Monitor crypto price movements"
+    args_schema = PriceMonitorInput
+    
+    def _run(self, pair: str, threshold: float = 5.0) -> str:
+        # Implementation
+        return f"Monitoring {pair} for {threshold}% changes"
+
+    async def _arun(self, pair: str, threshold: float = 5.0) -> str:
+        # Async implementation
+        pass
+```
+
+### Twitter Integration Skill
+
+```python
+class TwitterSkill(BaseTool):
+    name = "twitter_post"
+    description = "Post updates to Twitter"
+    
+    def _run(self, text: str) -> str:
+        # Post to Twitter
+        return f"Posted: {text}"
+
+    def validate_length(self, text: str) -> bool:
+        return len(text) <= 280
+```
+
+## Best Practices
+
+1. **Input Validation**
+```python
+class TransactionInput(BaseModel):
+    amount: float = Field(..., gt=0, description="Transaction amount")
+    pair: str = Field(..., pattern="^[A-Z]+-[A-Z]+$")
+```
+
+2. **Error Handling**
+```python
+try:
+    response = await self.api_call()
+except RateLimitError:
+    return "Rate limit exceeded. Try again in 60 seconds."
+except ApiError as e:
+    return f"API Error: {str(e)}"
+```
+
+3. **Async Support**
+```python
+async def _arun(self, **kwargs):
+    async with aiohttp.ClientSession() as session:
+        result = await self.process(session, **kwargs)
+    return result
+```
+
+4. **Testing**
+```python
+def test_skill():
+    skill = CustomSkill()
+    result = skill.run(input="test")
+    assert result.status == "success"
+```
+
+## Example: Complete Trading Skill Set
+
+```python
+# skill_sets/trading.py
+from typing import List
+from pydantic import BaseModel, Field
+from langchain_core.tools import BaseTool
+
+class Order(BaseModel):
+    pair: str
+    side: str
+    amount: float
+    type: str = "market"
+
+class TradingSkill(BaseTool):
+    name = "execute_trade"
+    description = "Execute crypto trades"
+    
+    def __init__(self, api_key: str, pairs: List[str]):
+        self.api_key = api_key
+        self.allowed_pairs = pairs
+        super().__init__()
+    
+    def _run(self, order: Order) -> str:
+        if order.pair not in self.allowed_pairs:
+            return f"Unsupported pair: {order.pair}"
+        # Execute trade
+        return f"Executed {order.side} {order.amount} {order.pair}"
+```
+
+Enable in agent configuration:
+```json
+{
+  "skill_sets": {
+    "trading": {
+      "pairs": ["BTC-USD", "ETH-USD"],
+      "api_key": "your-api-key"
+    }
+  }
+}
+```
