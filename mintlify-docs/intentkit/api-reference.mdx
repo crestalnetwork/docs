@@ -1,0 +1,189 @@
+---
+title: 'API Overview'
+description: 'This API enables interaction with agents, their creation and management, and health monitoring of the API server.'
+---
+
+## **Endpoints**
+
+### **Health Monitoring**
+
+#### **GET `/health`**
+Check the health status of the API server.
+
+- **Description**: This endpoint provides a simple status check for the server.
+- **Response**:
+  ```json
+  {
+    "status": "healthy"
+  }
+  ```
+- **Example**:
+  ```bash
+  curl -X GET https://your-api-url.com/health
+  ```
+
+---
+
+### **Agent Chat Interaction**
+
+#### **GET `/{aid}/chat`**
+Chat with an AI agent.
+
+- **Description**: Sends a query to a specific agent and receives its response.
+- **Parameters**:
+  - `aid` (path, string): The unique identifier for the agent.
+  - `q` (query, string): The user’s query message.
+- **Responses**:
+  - **200 OK**:
+    ```text
+    [ You: ]
+
+    your message
+
+    -------------------
+    [ Agent: ]
+
+    agent response
+
+    -------------------
+    agent cost: 0.123 seconds
+    ```
+  - **404 Not Found**: Agent not found.
+  - **429 Too Many Requests**: Message quota exceeded.
+  - **500 Internal Server Error**: An unexpected error occurred.
+- **Example**:
+  ```bash
+  curl -X GET "https://your-api-url.com/{aid}/chat?q=Hello"
+  ```
+
+---
+
+### **Agent Management**
+
+#### **POST `/agents`**
+Create or update an agent.
+
+- **Description**: Allows the creation or update of an agent’s configuration.
+- **Request Body**:
+  ```json
+  {
+    "id": "my-agent",
+    "name": "My Agent",
+    "model": "gpt-4",
+    "prompt": "You are a helpful assistant",
+    "autonomous_enabled": false,
+    "autonomous_minutes": null,
+    "autonomous_prompt": null,
+    "cdp_enabled": false,
+    "twitter_enabled": false,
+    "crestal_skills": ["skill1", "skill2"],
+    "common_skills": ["skill3"],
+    "skill_sets": {
+      "set1": {
+        "option1": "value1"
+      }
+    }
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "id": "my-agent",
+    "name": "My Agent",
+    ...
+  }
+  ```
+- **Error Responses**:
+  - **400 Bad Request**: Invalid agent ID format.
+  - **500 Internal Server Error**: Database error or other internal issue.
+- **Example**:
+  ```bash
+  curl -X POST https://your-api-url.com/agents \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "my-agent",
+    "name": "My Agent",
+    "model": "gpt-4",
+    "prompt": "You are a helpful assistant",
+    "autonomous_enabled": false
+  }'
+  ```
+
+---
+
+#### **GET `/agents`**
+Retrieve all agents.
+
+- **Description**: Lists all agents along with their quota information.
+- **Response**:
+  ```json
+  [
+    {
+      "id": "agent-1",
+      "name": "Agent One",
+      "quota": {
+        "plan": "free",
+        "message_count_total": 50,
+        "message_limit_total": 100,
+        "last_message_time": "2024-12-01T10:00:00Z",
+        "last_autonomous_time": null
+      }
+    },
+    {
+      "id": "agent-2",
+      "name": "Agent Two",
+      "quota": {
+        "plan": "premium",
+        "message_count_total": 500,
+        "message_limit_total": 1000,
+        "last_message_time": "2024-12-01T11:00:00Z",
+        "last_autonomous_time": "2024-12-01T09:30:00Z"
+      }
+    }
+  ]
+  ```
+- **Example**:
+  ```bash
+  curl -X GET https://your-api-url.com/agents
+  ```
+
+---
+
+### **Autonomous Agent Configuration**
+
+Autonomous agents can be configured with the following parameters:
+
+- **Parameters**:
+  - `autonomous_enabled` (boolean): Enable or disable autonomous execution.
+  - `autonomous_minutes` (integer): Interval (in minutes) between executions.
+  - `autonomous_prompt` (string): Instruction for autonomous actions.
+
+- **Example Configuration**:
+  ```json
+  {
+    "id": "auto-agent",
+    "autonomous_enabled": true,
+    "autonomous_minutes": 60,
+    "autonomous_prompt": "Check for new updates and summarize them"
+  }
+  ```
+
+---
+
+### **Quota Management**
+
+Each agent has quota limits that include:
+- Total messages
+- Monthly messages
+- Daily messages
+- Total autonomous executions
+- Monthly autonomous executions
+
+#### **Quota Error Example**:
+```json
+{
+  "detail": "Message quota exceeded. Please upgrade your plan. Daily: 50/100, Monthly: 500/1000, Total: 5000/10000."
+}
+```
+
+---

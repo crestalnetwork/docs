@@ -1,0 +1,159 @@
+---
+title: 'Agent Setup: Creation and Configuration'
+description: 'Create and manage IntentKit agents'
+---
+
+# Understanding Agents
+
+IntentKit agents are AI assistants that can be customized with specific roles and behaviors. Each agent can be configured to handle different tasks autonomously.
+
+```mermaid
+graph TD
+    A[Agent] --> B[Core Components]
+    A --> C[Skills]
+    A --> D[Configuration]
+    
+    B --> B1[Core Model]
+    B --> B2[Behavioral Prompt]
+    
+    C --> C1[Pre-built Skills]
+    C --> C2[Custom Skills]
+    
+    D --> D1[Autonomous Tasks]
+    D --> D2[Third-party Integrations]
+
+    class A fill:#4CAF50,stroke:#388E3C,color:#FFFFFF
+    class B,C,D fill:#8BC34A,stroke:#7B9A3A,color:#FFFFFF
+    class B1,B2,C1,C2,D1,D2 fill:#CDDC39,stroke:#8B9A30,color:#000000
+```
+
+## Creating Agents
+
+Basic agent creation:
+
+```bash
+curl -X POST http://127.0.0.1:8000/agents \
+     -H "Content-Type: application/json" \
+     -d '{
+         "id": "test-bot",
+         "name": "Test Bot",
+         "model": "gpt-4",
+         "prompt": "You are a helpful AI assistant."
+     }'
+```
+
+## Quick Testing
+
+Test your agent:
+
+```bash
+# Basic chat test
+curl "http://127.0.0.1:8000/agents/test-bot/chat?q=Hello"
+
+# Browser testing
+http://127.0.0.1:8000/agents/test-bot/chat?q=Hello
+```
+
+## Agent Configuration
+
+```json
+{
+  "id": "trading-bot",
+  "name": "Trading Assistant",
+  "model": "gpt-4",
+  "prompt": "You are a crypto trading assistant with expertise in market analysis.",
+  "autonomous_enabled": false,
+  "autonomous_minutes": null,
+  "autonomous_prompt": null,
+  "integrations": {
+    "cdp": true,
+    "twitter": false
+  }
+}
+```
+
+### Core Settings
+- `id`: Unique identifier
+- `name`: Display name
+- `model`: AI model selection
+- `prompt`: Base instructions
+
+### Autonomous Mode
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Active: Schedule
+    Active --> Processing: Task
+    Processing --> Idle: Complete
+    Processing --> Alert: Issue
+    Alert --> Idle
+```
+
+Enable autonomous execution:
+
+```json
+{
+  "autonomous_enabled": true,
+  "autonomous_minutes": 60,
+  "autonomous_prompt": "1. Monitor market conditions
+2. Alert on significant changes
+3. Execute predefined strategies"
+}
+```
+
+## Adding Skills
+
+Agents can use various skills. See [Skills Guide](/intentkit/skills-guide) for details.
+
+```json
+{
+  "skills": {
+    "built_in": ["market_analysis", "risk_management"],
+    "custom": ["my_trading_strategy"]
+  }
+}
+```
+
+## Quotas
+
+Monitor usage via headers:
+```
+X-RateLimit-Remaining: 985
+X-RateLimit-Reset: 3600
+```
+
+## Error Handling
+
+Common status codes:
+- `404`: Agent not found
+- `429`: Quota exceeded
+- `500`: Internal error
+
+Error format:
+```json
+{
+  "error": {
+    "code": "quota_exceeded",
+    "message": "Daily limit reached",
+    "reset_time": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+## Best Practices
+
+1. **Agent Design**
+   - Clear, specific prompts
+   - Focused responsibility
+   - Appropriate skills
+
+2. **Configuration**
+   - Test manually first
+   - Start simple
+   - Monitor performance
+
+3. **Production Use**
+   - Implement rate limiting
+   - Monitor quotas
+   - Regular log reviews

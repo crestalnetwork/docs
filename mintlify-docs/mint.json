@@ -37,6 +37,26 @@
       ]
     },
     {
+      "group": "🤖 IntentKit",
+      "pages": [
+        "intentkit/overview",
+        "intentkit/quickstart",
+        "intentkit/agent-guide",
+        "intentkit/skills-guide",
+        "intentkit/twitter-integration",
+        {
+          "group": "API Reference",
+          "pages": [
+            "intentkit/api-reference",
+            "intentkit/check-api-health",
+            "intentkit/chat-with-an-ai-agent",
+            "intentkit/get-all-agents",
+            "intentkit/create-or-update-an-agent"
+          ]
+        }
+      ]
+    },
+    {
       "group": "🧠 Integrations",
       "pages": [
         "solvers/solver-worker-integration",

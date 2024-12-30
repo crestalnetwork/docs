@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: IntentKit REST API
+  description: >
+    API documentation for IntentKit, providing agent interactions, management, and health monitoring. 
+    **Note**: This API playground is designed to work only with local servers. Ensure you are using one of the specified server URLs below for testing.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:3000"
+    description: Local development server (port 3000)
+  - url: "http://127.0.0.1:5000"
+    description: Local server (port 5000)
+  - url: "http://localhost:8000"
+    description: Local server (port 8000)
+  - url: "http://localhost:4000"
+    description: Local development server (port 4000)
+paths:
+  /health:
+    get:
+      summary: Check API health
+      description: Check the health status of the API server.
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              example:
+                status: healthy
+  /{aid}/chat:
+    get:
+      summary: Chat with an AI agent
+      description: Sends a query to a specific agent and receives its response.
+      parameters:
+        - name: aid
+          in: path
+          required: true
+          description: The unique identifier for the agent.
+          schema:
+            type: string
+        - name: q
+          in: query
+          required: false
+          description: The user’s query message.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agent response.
+          content:
+            text/plain:
+              example: |
+                [ You: ]
+                your message
+                -------------------
+                [ Agent: ]
+                agent response
+                -------------------
+                agent cost: 0.123 seconds
+        '404':
+          description: Agent not found.
+        '429':
+          description: Message quota exceeded.
+        '500':
+          description: Internal server error.
+  /agents:
+    get:
+      summary: Get all agents
+      description: Retrieve a list of all agents along with their quota information.
+      responses:
+        '200':
+          description: List of agents with quota information.
+          content:
+            application/json:
+              example:
+                - id: agent-1
+                  name: Agent One
+                  quota:
+                    plan: free
+                    message_count_total: 50
+                    message_limit_total: 100
+                    last_message_time: 2024-12-01T10:00:00Z
+                    last_autonomous_time: null
+                - id: agent-2
+                  name: Agent Two
+                  quota:
+                    plan: premium
+                    message_count_total: 500
+                    message_limit_total: 1000
+                    last_message_time: 2024-12-01T11:00:00Z
+                    last_autonomous_time: 2024-12-01T09:30:00Z
+    post:
+      summary: Create or update an agent
+      description: Allows the creation or update of an agent’s configuration.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                model:
+                  type: string
+                prompt:
+                  type: string
+                autonomous_enabled:
+                  type: boolean
+                autonomous_minutes:
+                  type: integer
+                  nullable: true
+                autonomous_prompt:
+                  type: string
+                  nullable: true
+                cdp_enabled:
+                  type: boolean
+                twitter_enabled:
+                  type: boolean
+                crestal_skills:
+                  type: array
+                  items:
+                    type: string
+                common_skills:
+                  type: array
+                  items:
+                    type: string
+                skill_sets:
+                  type: object
+                  additionalProperties:
+                    type: object
+      responses:
+        '201':
+          description: Agent created or updated successfully.
+          content:
+            application/json:
+              example:
+                id: my-agent
+                name: My Agent
+        '400':
+          description: Invalid agent ID format.
+        '500':
+          description: Internal server error.
