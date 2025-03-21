@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Crestal Documentation",
+  "name": "Crestal Docs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -21,166 +21,32 @@
       "pages": ["introduction"]
     },
     {
-      "group": "🚀 Getting Started",
-      "pages": ["guides/testnet", "guides/quests", "guides/referrals"]
-    },
-    {
-      "group": "🌐 Networks",
-      "pages": [
-        "networks/supported-networks"
-      ]
+      "group": "🏛️ Nation",
+      "pages": [ ]
     },
     {
       "group": "🛠️ Build",
-      "pages": [
-        "build/rollup-avail-op-stack"
-      ]
+      "pages": [ ]
     },
     {
       "group": "🤖 IntentKit",
-      "pages": [
-        "intentkit/overview",
-        "intentkit/quickstart",
-        "intentkit/agent-guide",
-        "intentkit/skills-guide",
-        "intentkit/twitter-integration",
-        {
-          "group": "API Reference",
-          "pages": [
-            "intentkit/api-reference",
-            "intentkit/check-api-health",
-            "intentkit/chat-with-an-ai-agent",
-            "intentkit/get-all-agents",
-            "intentkit/create-or-update-an-agent"
-          ]
-        }
-      ]
+      "pages": [ ]
     },
-    {
-      "group": "🧠 Integrations",
-      "pages": [
-        "solvers/solver-worker-integration",
-        "solvers/solver-integration-quick-guide",
-        "solvers/worker",
-        "solvers/worker-guide"
-      ]
-    },
-    
-    
     {
       "group": "🔐 API Reference",
-      "pages": [
-        {
-          "group": "Authentication APIs",
-          "pages": [
-            "api-reference/check-system-health",
-            "api-reference/get-auth-nonce",
-            "api-reference/authenticate-user",
-            "api-reference/refresh-auth-token"
-          ]
-        },
-        {
-          "group": "Project Management APIs",
-          "pages": [
-            "api-reference/list-user-projects",
-            "api-reference/create-new-project",
-            "api-reference/terminate-a-project",
-            "api-reference/cancel-an-active-project",
-            "api-reference/get-project-details",
-            "api-reference/update-project-details"
-          ]
-        },
-        {
-          "group": "Deployment APIs",
-          "pages": [
-            "api-reference/retrieve-deployment-information",
-            "api-reference/list-deployments",
-            "api-reference/fetch-worker-deployment-status",
-            "api-reference/create-worker-deployment",
-            "api-reference/update-worker-deployment-status"
-          ]
-        },
-        {
-          "group": "Data Availability APIs",
-          "pages": [
-            "api-reference/record-node-da-metrics",
-            "api-reference/retrieve-system-metrics-for-da",
-            "api-reference/create-da-metrics-record",
-            "api-reference/fetch-legacy-da-information",
-            "api-reference/fetch-static-configuration-for-da",
-            "api-reference/retrieve-historical-performance-metrics-for-da"
-          ]
-        },
-        {
-          "group": "Proposals APIs",
-          "pages": [
-            "api-reference/retrieve-proposal-details",
-            "api-reference/retrieve-solver-proposal-recommendations",
-            "api-reference/submit-solver-proposals"
-          ]
-        },
-        {
-          "group": "Worker and Solver APIs",
-          "pages": [
-            "api-reference/list-active-workers",
-            "api-reference/retrieve-worker-details",
-            "api-reference/fetch-solver-details"
-          ]
-        },
-        {
-          "group": "Chat APIs",
-          "pages": [
-            "api-reference/retrieve-chat-history",
-            "api-reference/send-chat-message"
-          ]
-        },
-        {
-          "group": "Quest APIs",
-          "pages": [
-            "api-reference/list-available-quests",
-            "api-reference/retrieve-user-quest-progress",
-            "api-reference/retrieve-weekly-quest-status"
-          ]
-        },
-        {
-          "group": "Referral APIs",
-          "pages": [
-            "api-reference/fetch-referral-information",
-            "api-reference/process-referral-code-claim"
-          ]
-        },
-        {
-          "group": "Whitelist APIs",
-          "pages": [
-            "api-reference/check-whitelist-status"
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Metadata",
-      "pages": [
-        {
-          "group": "System Metrics",
-          "pages": [
-            "api-reference/metadata/retrieve-comprehensive-system-metrics"
-          ]
-        }
-      ]
-    }
-      ]
-    
-  ,
+      "pages": [ ]
+    }   
+  ],
   "footerSocials": {
     "twitter": "https://x.com/crestalnetwork",
-    "youtube": "https://www.youtube.com/@Crestalnetwork",
+    "telegram": "https://t.me/crestal_network",
+    "discord": "https://discord.gg/crestal",
     "github": "https://github.com/crestalnetwork",
+    "youtube": "https://www.youtube.com/@Crestalnetwork",
     "linkedin": "https://www.linkedin.com/company/crestal"
   },
   "analytics": {
     "ga4": {
         "measurementId": "G-SH3W021CDQ"
-    }
-}
-
+  }
 }
