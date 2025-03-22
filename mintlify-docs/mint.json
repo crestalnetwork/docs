@@ -18,7 +18,7 @@
   "navigation": [
     {
       "group": "",
-      "pages": ["introduction"]
+      "pages": ["nation/introduction"]
     },
     {
       "group": "🏛️ Nation",
