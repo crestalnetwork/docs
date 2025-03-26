@@ -33,16 +33,20 @@
     {
       "group": "🛠️ Build",
       "pages": [
-        "build/get-started"
+        "nation/build/get-started"
       ]
     },
     {
       "group": "🤖 IntentKit",
-      "pages": [ ]
+      "pages": [
+        "nation/coming-soon"
+      ]
     },
     {
       "group": "🔐 API Reference",
-      "pages": [ ]
+      "pages": [
+        "nation/coming-soon"
+      ]
     }
   ],
   "footerSocials": {
