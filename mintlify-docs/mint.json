@@ -19,33 +19,35 @@
     {
       "group": "",
       "pages": [
-        "nation/introduction"
+        "introduction"
       ]
     },
     {
       "group": "🏛️ Nation",
       "pages": [
-        "nation/nation/overview",
-        "nation/nation/litepaper",
-        "nation/nation/useful-links"
+        "nation/overview",
+        "nation/litepaper",
+        "nation/architecture",
+        "nation/useful-links"
       ]
     },
     {
       "group": "🛠️ Build",
       "pages": [
-        "nation/build/get-started"
+        "build/get-started",
+        "build/trading-agent"
       ]
     },
     {
       "group": "🤖 IntentKit",
       "pages": [
-        "nation/coming-soon"
+        "coming-soon"
       ]
     },
     {
       "group": "🔐 API Reference",
       "pages": [
-        "nation/coming-soon"
+        "coming-soon"
       ]
     }
   ],
