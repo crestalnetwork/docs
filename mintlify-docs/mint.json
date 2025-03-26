@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Crestal Docs",
+  "name": "Nation Docs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -18,15 +18,23 @@
   "navigation": [
     {
       "group": "",
-      "pages": ["nation/introduction"]
+      "pages": [
+        "nation/introduction"
+      ]
     },
     {
       "group": "🏛️ Nation",
-      "pages": [ ]
+      "pages": [
+        "nation/nation/overview",
+        "nation/nation/litepaper",
+        "nation/nation/useful-links"
+      ]
     },
     {
       "group": "🛠️ Build",
-      "pages": [ ]
+      "pages": [
+        "build/get-started"
+      ]
     },
     {
       "group": "🤖 IntentKit",
@@ -35,7 +43,7 @@
     {
       "group": "🔐 API Reference",
       "pages": [ ]
-    }   
+    }
   ],
   "footerSocials": {
     "twitter": "https://x.com/crestalnetwork",
@@ -48,5 +56,6 @@
   "analytics": {
     "ga4": {
         "measurementId": "G-SH3W021CDQ"
+    }
   }
 }
