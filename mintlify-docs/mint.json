@@ -23,7 +23,7 @@
       ]
     },
     {
-      "group": "🏛️ Nation",
+      "group": "🏛️ Crestal Nation",
       "pages": [
         "nation/overview",
         "nation/litepaper",
@@ -39,9 +39,11 @@
       ]
     },
     {
-      "group": "💰 Tokenomics",
+      "group": "💰 $NATION",
       "pages": [
-        "coming-soon"
+        "token/tokenomics",
+        "token/airdrop-one",
+        "token/claim-stake"
       ]
     },
     {
