@@ -43,7 +43,8 @@
       "pages": [
         "token/tokenomics",
         "token/airdrop-one",
-        "token/claim-stake"
+        "token/claim-stake",
+        "token/wallets"
       ]
     },
     {
