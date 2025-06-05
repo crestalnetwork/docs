@@ -45,7 +45,8 @@
         "token/supply",
         "token/airdrop-one",
         "token/claim-stake",
-        "token/wallets"
+        "token/wallets",
+        "token/buy"
       ]
     },
     {
