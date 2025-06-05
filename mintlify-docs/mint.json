@@ -42,9 +42,18 @@
       "group": "💰 $NATION",
       "pages": [
         "token/tokenomics",
+        "token/supply",
         "token/airdrop-one",
         "token/claim-stake",
         "token/wallets"
+      ]
+    },
+    {
+      "group": "🪪 Nation Pass NFT",
+      "pages": [
+        "nft/intro",
+        "nft/utilities",
+        "nft/buy"
       ]
     },
     {
