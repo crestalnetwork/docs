@@ -34,8 +34,7 @@
     {
       "group": "🛠️ Build",
       "pages": [
-        "build/get-started",
-        "build/trading-agent"
+        "build/how-to"
       ]
     },
     {
