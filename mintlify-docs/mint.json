@@ -60,13 +60,17 @@
       "group": "🤖 IntentKit",
       "pages": [
         "intentkit/overview",
-        "intentkit/contributing"
+        "intentkit/agent-api",
+        "intentkit/contributing",
+        "intentkit/intentkit-ai",
+        "intentkit/changelog",
+        "intentkit/examples"
       ]
     },
     {
       "group": "🔐 API Reference",
       "pages": [
-        "coming-soon"
+        "api/api"
       ]
     }
   ],
